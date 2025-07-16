@@ -1,0 +1,569 @@
+Microsoft Windows [Version 10.0.22631.4602]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\SYBCA1076>sqlite3
+SQLite version 3.36.0 2021-06-18 18:36:39
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .open sales.db
+sqlite> .database
+main: C:\SYBCA1076\sales.db r/w
+sqlite> create table tblorder(oid,pur_amt,ord_date,sid);
+sqlite> insert into tblorder values(1,12000,'05-12-2020',5001);
+sqlite> insert into tblorder values(2,42000,'20-12-2020',5002);
+sqlite> insert into tblorder values(3,2000,'02-02-2020',5003);
+sqlite> insert into tblorder values(4,14000,'03-02-2021',5005);
+sqlite> insert into tblorder values(5,23000,'15-04-2021',5003);
+sqlite> insert into tblorder values(6,33000,'20-05-2021',5001);
+sqlite> insert into tblorder values(7,32000,'22-06-2021',5003);
+sqlite> insert into tblorder values(8,23500,'01-07-2021',5003);
+sqlite> insert into tblorder values(9,43000,'05-07-2021',5001);
+sqlite> insert into tblorder values(10,12000,'15-07-2021',5002);
+sqlite> .mode box
+sqlite> select *from tblorder;
+┌─────┬─────────┬────────────┬──────┐
+│ oid │ pur_amt │  ord_date  │ sid  │
+├─────┼─────────┼────────────┼──────┤
+│ 1   │ 12000   │ 05-12-2020 │ 5001 │
+│ 2   │ 42000   │ 20-12-2020 │ 5002 │
+│ 3   │ 2000    │ 02-02-2020 │ 5003 │
+│ 4   │ 14000   │ 03-02-2021 │ 5005 │
+│ 5   │ 23000   │ 15-04-2021 │ 5003 │
+│ 6   │ 33000   │ 20-05-2021 │ 5001 │
+│ 7   │ 32000   │ 22-06-2021 │ 5003 │
+│ 8   │ 23500   │ 01-07-2021 │ 5003 │
+│ 9   │ 43000   │ 05-07-2021 │ 5001 │
+│ 10  │ 12000   │ 15-07-2021 │ 5002 │
+└─────┴─────────┴────────────┴──────┘
+sqlite> create table customer(cid_cust_name,grade,sid);
+sqlite> drop table customer;
+sqlite> create table customer(cid,cust_name,grade,sid);
+sqlite> insert into customer(c1,'mohit patel',100,5001);
+Error: near "100": syntax error
+sqlite> insert into customer(c1,'mohit patel','100',5001);
+Error: near "5001": syntax error
+sqlite> insert into customer values(c1,'mohit patel',100,5001);
+Error: no such column: c1
+sqlite> insert into customer values('c1','mohit patel',100,5001);
+sqlite> insert into customer values('c2','geeta vyas',200,5003);
+sqlite> insert into customer values('c3','jaya patil',100,5005);
+sqlite> insert into customer values('c4','vishal gohel',300,5005);
+sqlite> insert into customer values('c5','kartik goyenka',200,5002);
+sqlite> insert into customer values('c6','meera prajapati',100,5001);
+sqlite> insert into customer values('c7','veer vyas',300,5002);
+sqlite> insert into customer values('c8','maya mehta',200,5003);
+sqlite> .mode box
+sqlite> select *from customer;
+┌─────┬─────────────────┬───────┬──────┐
+│ cid │    cust_name    │ grade │ sid  │
+├─────┼─────────────────┼───────┼──────┤
+│ c1  │ mohit patel     │ 100   │ 5001 │
+│ c2  │ geeta vyas      │ 200   │ 5003 │
+│ c3  │ jaya patil      │ 100   │ 5005 │
+│ c4  │ vishal gohel    │ 300   │ 5005 │
+│ c5  │ kartik goyenka  │ 200   │ 5002 │
+│ c6  │ meera prajapati │ 100   │ 5001 │
+│ c7  │ veer vyas       │ 300   │ 5002 │
+│ c8  │ maya mehta      │ 200   │ 5003 │
+└─────┴─────────────────┴───────┴──────┘
+sqlite> .help
+.archive ...             Manage SQL archives
+.auth ON|OFF             Show authorizer callbacks
+.backup ?DB? FILE        Backup DB (default "main") to FILE
+.bail on|off             Stop after hitting an error.  Default OFF
+.binary on|off           Turn binary output on or off.  Default OFF
+.cd DIRECTORY            Change the working directory to DIRECTORY
+.changes on|off          Show number of rows changed by SQL
+.check GLOB              Fail if output since .testcase does not match
+.clone NEWDB             Clone data into NEWDB from the existing database
+.databases               List names and files of attached databases
+.dbconfig ?op? ?val?     List or change sqlite3_db_config() options
+.dbinfo ?DB?             Show status information about the database
+.dump ?OBJECTS?          Render database content as SQL
+.echo on|off             Turn command echo on or off
+.eqp on|off|full|...     Enable or disable automatic EXPLAIN QUERY PLAN
+.excel                   Display the output of next command in spreadsheet
+.exit ?CODE?             Exit this program with return-code CODE
+.expert                  EXPERIMENTAL. Suggest indexes for queries
+.explain ?on|off|auto?   Change the EXPLAIN formatting mode.  Default: auto
+.filectrl CMD ...        Run various sqlite3_file_control() operations
+.fullschema ?--indent?   Show schema and the content of sqlite_stat tables
+.headers on|off          Turn display of headers on or off
+.help ?-all? ?PATTERN?   Show help text for PATTERN
+.import FILE TABLE       Import data from FILE into TABLE
+.imposter INDEX TABLE    Create imposter table TABLE on index INDEX
+.indexes ?TABLE?         Show names of indexes
+.limit ?LIMIT? ?VAL?     Display or change the value of an SQLITE_LIMIT
+.lint OPTIONS            Report potential schema issues.
+.load FILE ?ENTRY?       Load an extension library
+.log FILE|off            Turn logging on or off.  FILE can be stderr/stdout
+.mode MODE ?TABLE?       Set output mode
+.nullvalue STRING        Use STRING in place of NULL values
+.once ?OPTIONS? ?FILE?   Output for the next SQL command only to FILE
+.open ?OPTIONS? ?FILE?   Close existing database and reopen FILE
+.output ?FILE?           Send output to FILE or stdout if FILE is omitted
+.parameter CMD ...       Manage SQL parameter bindings
+.print STRING...         Print literal STRING
+.progress N              Invoke progress handler after every N opcodes
+.prompt MAIN CONTINUE    Replace the standard prompts
+.quit                    Exit this program
+.read FILE               Read input from FILE
+.recover                 Recover as much data as possible from corrupt db.
+.restore ?DB? FILE       Restore content of DB (default "main") from FILE
+.save FILE               Write in-memory database into FILE
+.scanstats on|off        Turn sqlite3_stmt_scanstatus() metrics on or off
+.schema ?PATTERN?        Show the CREATE statements matching PATTERN
+.selftest ?OPTIONS?      Run tests defined in the SELFTEST table
+.separator COL ?ROW?     Change the column and row separators
+.session ?NAME? CMD ...  Create or control sessions
+.sha3sum ...             Compute a SHA3 hash of database content
+.shell CMD ARGS...       Run CMD ARGS... in a system shell
+.show                    Show the current values for various settings
+.stats ?ARG?             Show stats or turn stats on or off
+.system CMD ARGS...      Run CMD ARGS... in a system shell
+.tables ?TABLE?          List names of tables matching LIKE pattern TABLE
+.testcase NAME           Begin redirecting output to 'testcase-out.txt'
+.testctrl CMD ...        Run various sqlite3_test_control() operations
+.timeout MS              Try opening locked tables for MS milliseconds
+.timer on|off            Turn SQL timer on or off
+.trace ?OPTIONS?         Output each SQL statement as it is run
+.vfsinfo ?AUX?           Information about the top-level VFS
+.vfslist                 List all available VFSes
+.vfsname ?AUX?           Print the name of the VFS stack
+.width NUM1 NUM2 ...     Set minimum column widths for columnar output
+sqlite> .mode csv
+sqlite> select *from tblorder;
+1,12000,05-12-2020,5001
+2,42000,20-12-2020,5002
+3,2000,02-02-2020,5003
+4,14000,03-02-2021,5005
+5,23000,15-04-2021,5003
+6,33000,20-05-2021,5001
+7,32000,22-06-2021,5003
+8,23500,01-07-2021,5003
+9,43000,05-07-2021,5001
+10,12000,15-07-2021,5002
+sqlite> .mode html
+sqlite> select *from customer;
+<TR><TD>c1</TD>
+<TD>mohit patel</TD>
+<TD>100</TD>
+<TD>5001</TD>
+</TR>
+<TR><TD>c2</TD>
+<TD>geeta vyas</TD>
+<TD>200</TD>
+<TD>5003</TD>
+</TR>
+<TR><TD>c3</TD>
+<TD>jaya patil</TD>
+<TD>100</TD>
+<TD>5005</TD>
+</TR>
+<TR><TD>c4</TD>
+<TD>vishal gohel</TD>
+<TD>300</TD>
+<TD>5005</TD>
+</TR>
+<TR><TD>c5</TD>
+<TD>kartik goyenka</TD>
+<TD>200</TD>
+<TD>5002</TD>
+</TR>
+<TR><TD>c6</TD>
+<TD>meera prajapati</TD>
+<TD>100</TD>
+<TD>5001</TD>
+</TR>
+<TR><TD>c7</TD>
+<TD>veer vyas</TD>
+<TD>300</TD>
+<TD>5002</TD>
+</TR>
+<TR><TD>c8</TD>
+<TD>maya mehta</TD>
+<TD>200</TD>
+<TD>5003</TD>
+</TR>
+sqlite> .mode insert
+sqlite> select *from customer;
+INSERT INTO "table" VALUES('c1','mohit patel',100,5001);
+INSERT INTO "table" VALUES('c2','geeta vyas',200,5003);
+INSERT INTO "table" VALUES('c3','jaya patil',100,5005);
+INSERT INTO "table" VALUES('c4','vishal gohel',300,5005);
+INSERT INTO "table" VALUES('c5','kartik goyenka',200,5002);
+INSERT INTO "table" VALUES('c6','meera prajapati',100,5001);
+INSERT INTO "table" VALUES('c7','veer vyas',300,5002);
+INSERT INTO "table" VALUES('c8','maya mehta',200,5003);
+sqlite> .tables
+customer  tblorder
+sqlite> .show
+        echo: off
+         eqp: off
+     explain: auto
+     headers: off
+        mode: insert
+   nullvalue: ""
+      output: stdout
+colseparator: ","
+rowseparator: "\r\n"
+       stats: off
+       width: 0 0 0 0
+    filename: sales.db
+sqlite> .width num1,num2,num3
+sqlite> select *from customer;
+INSERT INTO "table" VALUES('c1','mohit patel',100,5001);
+INSERT INTO "table" VALUES('c2','geeta vyas',200,5003);
+INSERT INTO "table" VALUES('c3','jaya patil',100,5005);
+INSERT INTO "table" VALUES('c4','vishal gohel',300,5005);
+INSERT INTO "table" VALUES('c5','kartik goyenka',200,5002);
+INSERT INTO "table" VALUES('c6','meera prajapati',100,5001);
+INSERT INTO "table" VALUES('c7','veer vyas',300,5002);
+INSERT INTO "table" VALUES('c8','maya mehta',200,5003);
+sqlite> .headers on
+sqlite> .mode box
+sqlite> select *from customer;
+┌─────┬─────────────────┬───────┬──────┐
+│ cid │    cust_name    │ grade │ sid  │
+├─────┼─────────────────┼───────┼──────┤
+│ c1  │ mohit patel     │ 100   │ 5001 │
+│ c2  │ geeta vyas      │ 200   │ 5003 │
+│ c3  │ jaya patil      │ 100   │ 5005 │
+│ c4  │ vishal gohel    │ 300   │ 5005 │
+│ c5  │ kartik goyenka  │ 200   │ 5002 │
+│ c6  │ meera prajapati │ 100   │ 5001 │
+│ c7  │ veer vyas       │ 300   │ 5002 │
+│ c8  │ maya mehta      │ 200   │ 5003 │
+└─────┴─────────────────┴───────┴──────┘
+sqlite> .headers on
+sqlite> select *from customer;
+┌─────┬─────────────────┬───────┬──────┐
+│ cid │    cust_name    │ grade │ sid  │
+├─────┼─────────────────┼───────┼──────┤
+│ c1  │ mohit patel     │ 100   │ 5001 │
+│ c2  │ geeta vyas      │ 200   │ 5003 │
+│ c3  │ jaya patil      │ 100   │ 5005 │
+│ c4  │ vishal gohel    │ 300   │ 5005 │
+│ c5  │ kartik goyenka  │ 200   │ 5002 │
+│ c6  │ meera prajapati │ 100   │ 5001 │
+│ c7  │ veer vyas       │ 300   │ 5002 │
+│ c8  │ maya mehta      │ 200   │ 5003 │
+└─────┴─────────────────┴───────┴──────┘
+sqlite> .mode asc
+sqlite> select *from customer;
+cidcust_namegradesidc1mohit patel1005001c2geeta vyas2005003c3jaya patil1005005c4vishal gohel3005005c5kartik goyenka2005002c6meera prajapati1005001c7veer vyas3005002c8maya mehta2005003sqlite>
+ ;
+sqlite> .mode rty
+Error: mode should be one of: ascii box column csv html insert json line list markdown quote table tabs tcl
+sqlite> .mode column
+sqlite> select *from customer;
+cid  cust_name        grade  sid
+---  ---------------  -----  ----
+c1   mohit patel      100    5001
+c2   geeta vyas       200    5003
+c3   jaya patil       100    5005
+c4   vishal gohel     300    5005
+c5   kartik goyenka   200    5002
+c6   meera prajapati  100    5001
+c7   veer vyas        300    5002
+c8   maya mehta       200    5003
+sqlite>sqlite> .schema
+CREATE TABLE tblorder(oid,pur_amt,ord_date,sid);
+CREATE TABLE customer(cid,cust_name,grade,sid);
+sqlite> begin;
+sqlite> insert into customer values('c11','yash vaja',200,5002);
+sqlite> insert into customer values('c12','rudra tejani',100,5006);
+sqlite> rollback;
+sqlite> begin;
+sqlite> delete from tblorder where oid=1;
+sqlite> delete from tblorder where oid=2;
+sqlite> select *from tblorder;
+oid  pur_amt  ord_date    sid
+---  -------  ----------  ----
+3    2000     02-02-2020  5003
+4    14000    03-02-2021  5005
+5    23000    15-04-2021  5003
+6    33000    20-05-2021  5001
+7    32000    22-06-2021  5003
+8    23500    01-07-2021  5003
+9    43000    05-07-2021  5001
+10   12000    15-07-2021  5002
+sqlite> rollback;
+sqlite> select *from tblorder;
+oid  pur_amt  ord_date    sid
+---  -------  ----------  ----
+1    12000    05-12-2020  5001
+2    42000    20-12-2020  5002
+3    2000     02-02-2020  5003
+4    14000    03-02-2021  5005
+5    23000    15-04-2021  5003
+6    33000    20-05-2021  5001
+7    32000    22-06-2021  5003
+8    23500    01-07-2021  5003
+9    43000    05-07-2021  5001
+10   12000    15-07-2021  5002
+
+sqlite> update customer set cust_name='rahul kumar' where cid='c7';
+sqlite> commit;
+sqlite> select *from customer;
+cid  cust_name        grade  sid
+---  ---------------  -----  ----
+c1   mohit patel      100    5001
+c2   geeta vyas       200    5003
+c3   jaya patil       100    5005
+c4   vishal gohel     300    5005
+c5   kartik goyenka   200    5002
+c6   meera prajapati  100    5001
+c7   rahul kumar      300    5002
+c8   maya mehta       200    5003
+c9   parth kumbhani   100    5001
+c10  yash vaja        200    5002
+sqlite> select *from customer where grade=200;
+cid  cust_name       grade  sid
+---  --------------  -----  ----
+c2   geeta vyas      200    5003
+c5   kartik goyenka  200    5002
+c8   maya mehta      200    5003
+c10  yash vaja       200    5002
+
+sqlite> select *from customer where cust_name like'p%';;
+cid  cust_name       grade  sid
+---  --------------  -----  ----
+c9   parth kumbhani  100    5001
+sqlite>
+
+sqlite> select distinct grade from customer;
+grade
+-----
+100
+200
+300
+
+sqlite> select *from tblorder where pur_amt between 10000 and 20000;
+oid  pur_amt  ord_date    sid
+---  -------  ----------  ----
+1    12000    05-12-2020  5001
+4    14000    03-02-2021  5005
+10   12000    15-07-2021  5002
+
+sqlite> select *from customer where sid in(5001,5003);
+cid  cust_name        grade  sid
+---  ---------------  -----  ----
+c1   mohit patel      100    5001
+c2   geeta vyas       200    5003
+c6   meera prajapati  100    5001
+c8   maya mehta       200    5003
+c9   parth kumbhani   100    5001
+
+sqlite> select *from customer limit 3;
+cid  cust_name    grade  sid
+---  -----------  -----  ----
+c1   mohit patel  100    5001
+c2   geeta vyas   200    5003
+c3   jaya patil   100    5005
+
+sqlite> select *from customer limit 3 offset 4;
+cid  cust_name        grade  sid
+---  ---------------  -----  ----
+c5   kartik goyenka   200    5002
+c6   meera prajapati  100    5001
+c7   rahul kumar      300    5002
+
+sqlite> select *from salesman s where not exists(select *from customer c where c.sid=s.sid);
+┌──────┬──────────────┬─────────┬────────────┐
+│ sid  │     name     │  city   │ commission │
+├──────┼──────────────┼─────────┼────────────┤
+│ 5004 │ jeevan mehta │ navsari │ 0.14       │
+│ 5006 │ ramesh patel │ surat   │ 0.13       │
+└──────┴──────────────┴─────────┴────────────┘
+
+sqlite> select sid , sum(pur_amt) as total_pur_amt from tblorder group by sid;
+┌──────┬───────────────┐
+│ sid  │ total_pur_amt │
+├──────┼───────────────┤
+│ 5001 │ 88000         │
+│ 5002 │ 54000         │
+│ 5003 │ 78500         │
+│ 5005 │ 16000         │
+└──────┴───────────────┘
+
+sqlite> select *from tblorder order by pur_amt desc;
+┌─────┬─────────┬────────────┬──────┐
+│ oid │ pur_amt │  ord_date  │ sid  │
+├─────┼─────────┼────────────┼──────┤
+│ 9   │ 43000   │ 05-07-2021 │ 5001 │
+│ 2   │ 42000   │ 20-12-2020 │ 5002 │
+│ 6   │ 33000   │ 20-05-2021 │ 5001 │
+│ 7   │ 32000   │ 22-06-2021 │ 5003 │
+│ 8   │ 23500   │ 01-07-2021 │ 5003 │
+│ 5   │ 23000   │ 15-04-2021 │ 5003 │
+│ 4   │ 14000   │ 03-02-2021 │ 5005 │
+│ 1   │ 12000   │ 05-12-2020 │ 5001 │
+│ 10  │ 12000   │ 15-07-2021 │ 5002 │
+│ 3   │ 2000    │ 02-02-2020 │ 5005 │
+└─────┴─────────┴────────────┴──────┘
+
+sqlite> select sid,avg(grade) as avg_grade from customer group by sid having avg(grade)>150;
+┌──────┬───────────┐
+│ sid  │ avg_grade │
+├──────┼───────────┤
+│ 5002 │ 250.0     │
+│ 5003 │ 200.0     │
+│ 5005 │ 200.0     │
+└──────┴───────────┘
+sqlite> select *from tblorder order by pur_amt desc;
+┌─────┬─────────┬────────────┬──────┐
+│ oid │ pur_amt │  ord_date  │ sid  │
+├─────┼─────────┼────────────┼──────┤
+│ 9   │ 43000   │ 05-07-2021 │ 5001 │
+│ 2   │ 42000   │ 20-12-2020 │ 5002 │
+│ 6   │ 33000   │ 20-05-2021 │ 5001 │
+│ 7   │ 32000   │ 22-06-2021 │ 5003 │
+│ 8   │ 23500   │ 01-07-2021 │ 5003 │
+│ 5   │ 23000   │ 15-04-2021 │ 5003 │
+│ 4   │ 14000   │ 03-02-2021 │ 5005 │
+│ 1   │ 12000   │ 05-12-2020 │ 5001 │
+│ 10  │ 12000   │ 15-07-2021 │ 5002 │
+│ 3   │ 2000    │ 02-02-2020 │ 5005 │
+└─────┴─────────┴────────────┴──────┘
+
+sqlite> select cid,
+   ...> cust_name,
+   ...> grade,
+   ...> case
+   ...> when grade=100 then 5000
+   ...> when grade=200 then 10000
+   ...> else 15000
+   ...> end as bonus from customer;
+┌─────┬─────────────────┬───────┬───────┐
+│ cid │    cust_name    │ grade │ bonus │
+├─────┼─────────────────┼───────┼───────┤
+│ c1  │ mohit patel     │ 100   │ 5000  │
+│ c2  │ geeta vyas      │ 200   │ 10000 │
+│ c3  │ jaya patil      │ 100   │ 5000  │
+│ c4  │ vishal gohel    │ 300   │ 15000 │
+│ c5  │ kartik goyenka  │ 200   │ 10000 │
+│ c6  │ meera prajapati │ 100   │ 5000  │
+│ c7  │ veer vyas       │ 300   │ 15000 │
+│ c8  │ maya mehta      │ 200   │ 10000 │
+└─────┴─────────────────┴───────┴───────┘
+
+sqlite> select *,
+   ...> case
+   ...> when sid in (5001,5002) then 'A'
+   ...> when sid in (5003,5005) then 'B'
+   ...> else 'c'
+   ...> end as class from tblorder;
+┌─────┬─────────┬────────────┬──────┬───────┐
+│ oid │ pur_amt │  ord_date  │ sid  │ class │
+├─────┼─────────┼────────────┼──────┼───────┤
+│ 1   │ 12000   │ 05-12-2020 │ 5001 │ A     │
+│ 2   │ 42000   │ 20-12-2020 │ 5002 │ A     │
+│ 3   │ 2000    │ 02-02-2020 │ 5005 │ B     │
+│ 4   │ 14000   │ 03-02-2021 │ 5005 │ B     │
+│ 5   │ 23000   │ 15-04-2021 │ 5003 │ B     │
+│ 6   │ 33000   │ 20-05-2021 │ 5001 │ A     │
+│ 7   │ 32000   │ 22-06-2021 │ 5003 │ B     │
+│ 8   │ 23500   │ 01-07-2021 │ 5003 │ B     │
+│ 9   │ 43000   │ 05-07-2021 │ 5001 │ A     │
+│ 10  │ 12000   │ 15-07-2021 │ 5002 │ A     │
+└─────┴─────────┴────────────┴──────┴───────┘
+
+sqlite> select c.*,
+   ...> s.name from customer c join salesman s on c.sid=s.sid;
+┌─────┬─────────────────┬───────┬──────┬─────────────┐
+│ cid │    cust_name    │ grade │ sid  │    name     │
+├─────┼─────────────────┼───────┼──────┼─────────────┤
+│ c1  │ mohit patel     │ 100   │ 5001 │ mohan patel │
+│ c2  │ geeta vyas      │ 200   │ 5003 │ preet vyas  │
+│ c3  │ jaya patil      │ 100   │ 5005 │ paul adam   │
+│ c4  │ vishal gohel    │ 300   │ 5005 │ paul adam   │
+│ c5  │ kartik goyenka  │ 200   │ 5002 │ nail shah   │
+│ c6  │ meera prajapati │ 100   │ 5001 │ mohan patel │
+│ c7  │ veer vyas       │ 300   │ 5002 │ nail shah   │
+│ c8  │ maya mehta      │ 200   │ 5003 │ preet vyas  │
+
+
+sqlite> select o.*,
+   ...> s.* from tblorder o join salesman s on o.sid=s.sid;
+┌─────┬─────────┬────────────┬──────┬──────┬─────────────┬───────────┬────────────┐
+│ oid │ pur_amt │  ord_date  │ sid  │ sid  │    name     │   city    │ commission │
+├─────┼─────────┼────────────┼──────┼──────┼─────────────┼───────────┼────────────┤
+│ 1   │ 12000   │ 05-12-2020 │ 5001 │ 5001 │ mohan patel │ anand     │ 0.15       │
+│ 2   │ 42000   │ 20-12-2020 │ 5002 │ 5002 │ nail shah   │ surat     │ 0.13       │
+│ 3   │ 2000    │ 02-02-2020 │ 5005 │ 5005 │ paul adam   │ nadiad    │ 0.12       │
+│ 4   │ 14000   │ 03-02-2021 │ 5005 │ 5005 │ paul adam   │ nadiad    │ 0.12       │
+│ 5   │ 23000   │ 15-04-2021 │ 5003 │ 5003 │ preet vyas  │ ahmedabad │ 0.11       │
+│ 6   │ 33000   │ 20-05-2021 │ 5001 │ 5001 │ mohan patel │ anand     │ 0.15       │
+│ 7   │ 32000   │ 22-06-2021 │ 5003 │ 5003 │ preet vyas  │ ahmedabad │ 0.11       │
+│ 8   │ 23500   │ 01-07-2021 │ 5003 │ 5003 │ preet vyas  │ ahmedabad │ 0.11       │
+│ 9   │ 43000   │ 05-07-2021 │ 5001 │ 5001 │ mohan patel │ anand     │ 0.15       │
+│ 10  │ 12000   │ 15-07-2021 │ 5002 │ 5002 │ nail shah   │ surat     │ 0.13       │
+└─────┴─────────┴────────────┴──────┴──────┴─────────────┴───────────┴────────────┘
+
+sqlite> select o.*,
+   ...> s.commission from tblorder o join salesman s on o.sid=s.sid;
+┌─────┬─────────┬────────────┬──────┬────────────┐
+│ oid │ pur_amt │  ord_date  │ sid  │ commission │
+├─────┼─────────┼────────────┼──────┼────────────┤
+│ 1   │ 12000   │ 05-12-2020 │ 5001 │ 0.15       │
+│ 2   │ 42000   │ 20-12-2020 │ 5002 │ 0.13       │
+│ 3   │ 2000    │ 02-02-2020 │ 5005 │ 0.12       │
+│ 4   │ 14000   │ 03-02-2021 │ 5005 │ 0.12       │
+│ 5   │ 23000   │ 15-04-2021 │ 5003 │ 0.11       │
+│ 6   │ 33000   │ 20-05-2021 │ 5001 │ 0.15       │
+│ 7   │ 32000   │ 22-06-2021 │ 5003 │ 0.11       │
+│ 8   │ 23500   │ 01-07-2021 │ 5003 │ 0.11       │
+│ 9   │ 43000   │ 05-07-2021 │ 5001 │ 0.15       │
+│ 10  │ 12000   │ 15-07-2021 │ 5002 │ 0.13       │
+└─────┴─────────┴────────────┴──────┴────────────┘
+
+sqlite> create trigger trg_commission before insert on salesman
+   ...> begin
+   ...> select
+   ...> case
+   ...> when NEW.commission<0 or NEW.commission >1 then
+   ...>  raise(Abort,'Commission must be between 1 and 1.')
+   ...> end;
+   ...> end;
+sqlite> insert into salesman values(5007,'rahul kumar','ayodhya',1.2);
+Runtime error: Commission must be between 1 and 1. (19)
+
+
+sqlite> select name from sqlite_master where type='trigger';
+┌────────────────┐
+│      name      │
+├────────────────┤
+│ trg_commission │
+└────────────────┘
+
+sqlite> create trigger trg_validate_date before insert on tblorder
+   ...> for each row
+   ...> begin
+   ...> select
+   ...> case
+   ...> when NEW.ord_date not like '__-__-____' then
+   ...> raise(abort,'date must be in dd-mm-yyyy format.')
+   ...> end;
+   ...> end;
+sqlite> insert into tblorder values(10,12000,'2020-07-20',5004);
+Runtime error: date must be in dd-mm-yyyy format. (19)
+
+sqlite> create trigger trg_validate_up_date before update on tblorder
+   ...> for each row
+   ...> begin
+   ...> select
+   ...> case
+   ...> when NEW.ord_date not like '__-__-____' then
+   ...> raise(abort,'date must be in dd-mm-yyyy format.')
+   ...> end;
+   ...> end;
+sqlite> update tblorder set ord_date='2025-07-21' where oid=5;
+Runtime error: date must be in dd-mm-yyyy format. (19)
+
+
+
+
+
+
